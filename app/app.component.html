@@ -1,0 +1,47 @@
+ <ActionBar title="Trip Tracker">
+</ActionBar>
+<DockLayout class="p-20">
+
+<StackLayout *ngIf="!trackingStarted" dock="top" class="main-content tracked-trip-list">
+<Label [text]="noTripsLabel"></Label>
+</StackLayout>
+
+<StackLayout *ngIf="trackingStarted" dock="top" class="main-content tracking-map">
+<Label text="Map displays here"></Label>
+</StackLayout>
+
+<GridLayout dock="bottom" class="bottom-buttons" columns="2, auto, *" rows="1, auto, *" width="100%" height="64">
+
+<Button text="Record New Trip" 
+row="1" col="1" colspan="2" 
+*ngIf="!trackingStarted" 
+(tap)="startTracking()" 
+class="btn btn-primary btn-active btn-start"></Button>
+
+<Button text="Pause Trip"
+row="1" col="1" colspan="2" 
+*ngIf="isTracking && trackingStarted" 
+(tap)="stopTracking()" 
+class="btn btn-primary btn-active btn-stop"></Button>
+
+<Button text="Resume" 
+row="1" col="1" width="50%"
+*ngIf="!isTracking && trackingStarted"
+(tap)="resumeTracking()" 
+class="btn btn-primary btn-active btn-resume"></Button>
+
+<Button text="Save" 
+row="1" col="2" width="50%"
+*ngIf="!isTracking && trackingStarted"
+(tap)="completeTracking()" 
+class="btn btn-primary btn-active btn-complete"></Button>
+
+</GridLayout>
+</DockLayout>
+    
+
+
+    <!--<StackLayout class="p-20" width="100%" dock="bottom"> -->
+    <!--<Button text="Start Tracking" *ngIf="!trackingStarted" (tap)="startTracking()" class="btn btn-primary btn-active btn-start"></Button>
+    <Button text="Stop Tracking" *ngIf="isTracking && trackingStarted" (tap)="stopTracking()" class="btn btn-primary btn-active btn-stop"></Button>
+    -->
