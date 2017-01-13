@@ -1,6 +1,4 @@
-import {
-    THIS_EXPR
-} from '../platforms/android/src/main/assets/app/tns_modules/@angular/compiler/src/output/output_ast';
+import { AppService } from './app.service';
 import { Observable, Subject } from 'rxjs/Rx';
 import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 
@@ -21,15 +19,15 @@ export class AppComponent {
 
 
     public longs: string[] = [];
-    public points: geolocation.Location[];
 
     public long$: Observable<string>;
+    public points: geolocation.Location[];
     public points$: Observable<geolocation.Location>;
 
     @ViewChild("mylabel") myLabel: ElementRef;
 
-    constructor(private _ngZone: NgZone) {
-        this.loc$ = new Subject();
+    constructor(private _ngZone: NgZone, srv: AppService) {
+        this.loc$ = srv.loc$;
         this.long$ = this.loc$.asObservable().map(l => `${l.latitude} : ${l.longitude}`);
         this.long$.subscribe(v => {
             try {
@@ -74,8 +72,8 @@ export class AppComponent {
         }, 
         {
             desiredAccuracy: 3, 
-            updateDistance: 5, 
-            minimumUpdateTime : 1000
+            updateDistance: 10, 
+            minimumUpdateTime : 1000 * 5
         }); // Should update every 20 seconds according to Googe documentation. Not verified.
 
     }
@@ -88,7 +86,7 @@ export class AppComponent {
         this.isTracking = true;
     }
 
-       public completeTracking() {
+    public completeTracking() {
         this.isTracking = false;
         this.trackingStarted = false;
         geolocation.clearWatch(this.watchId);
