@@ -2,14 +2,19 @@
 </ActionBar>
 <DockLayout class="p-20">
 
-<StackLayout *ngIf="!trackingStarted" dock="top" class="main-content tracked-trip-list">
+<!--<StackLayout *ngIf="!trackingStarted" dock="top" class="main-content tracked-trip-list">
 <Label [text]="noTripsLabel"></Label>
+</StackLayout>-->
+
+<!--<StackLayout dock="top" class="main-content tracking-map">
+</StackLayout>-->
+
+<StackLayout dock="top" class="main-content tracking-map">
+<!--<Label #mylabel text="Map displays here" textWrap="true"></Label>-->
+<Label *ngFor="let item of longs;" text="{{item}}"></Label>
+<map [points]="points"></map>
 </StackLayout>
 
-<StackLayout *ngIf="trackingStarted" dock="top" class="main-content tracking-map">
-<Label text="Map displays here"></Label>
-<map></map>
-</StackLayout>
 
 <GridLayout dock="bottom" class="bottom-buttons" columns="2, auto, *" rows="1, auto, *" width="100%" height="64">
 
